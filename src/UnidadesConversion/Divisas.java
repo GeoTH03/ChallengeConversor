@@ -19,7 +19,8 @@ public class Divisas extends Unidades {
 	}
 	@Override
 	public void getUnidad(){
-		//ActualizarUnidades.table.set
+		ActualizarUnidades actualizacion = new ActualizarUnidades();
+		actualizacion.table.setModel(Object[] model);
 		this.Monedas[0][0] = "MXN";
 		this.Monedas[1][0] = 16.78;
 		this.Monedas[0][1] = "USD";
