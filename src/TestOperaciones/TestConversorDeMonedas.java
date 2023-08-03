@@ -16,6 +16,7 @@ public class TestConversorDeMonedas {
 		divisa.getUnidad();
 		operar.operacionConvertirDiv();
 		
+		//prueba.get("MXN", "CLP", "60");
 		}
 
 	}

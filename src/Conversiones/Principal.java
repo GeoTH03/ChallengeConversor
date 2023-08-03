@@ -1,5 +1,6 @@
 package Conversiones;
 
+import javax.swing.JFrame;
 import UnidadesConversion.*;
 import com.formdev.flatlaf.*;
 import java.awt.EventQueue;
@@ -64,21 +65,31 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import com.formdev.flatlaf.intellijthemes.*;
 public class Principal {
-
+	public static int ventana;
 	public static void main(String[] args) throws UnsupportedLookAndFeelException{
 		FlatLightLaf.setup();
-	
+		int valor;
 		
-		/*
-		 * UIManager.setLookAndFeel(new FlatGradiantoDeepOceanIJTheme());
-		 * UIManager.put("Component.arc",100); UIManager.put( "Button.darkShadow", 999
-		 * ); javax.swing.UIManager.put("Button.foreground", Color.red);
-		 * 
-		 * UIManager.put( "Component.arrowType", "chevron" );
-		 */
+		//TextArea
+		  UIManager.setLookAndFeel(new FlatGradiantoDeepOceanIJTheme());
+		  UIManager.put("JTextArea.arc",100); 		  
+		  UIManager.put( "Component.arrowType", "chevron" );
+		 
 		ConversorForm nuevo = new ConversorForm();
-		//SwingUtilities.updateComponentTreeUI(nuevo);
+		SwingUtilities.updateComponentTreeUI(nuevo);
 		
 		nuevo.setVisible(true);
+		
+		valor = recibe(ventana);
+		
+		if(valor == 1) {
+			ActualizarUnidades window = new ActualizarUnidades();
+			window.frame.setVisible(true);
+		}
+		
+	}
+	
+	public static int recibe(int valor) {
+		return valor;
 	}
 }

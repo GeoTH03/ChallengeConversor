@@ -59,16 +59,21 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ConversorForm extends JFrame implements ActionListener {
 
 	private JPanel PanelPrincipal;
-	Button btnDivisas, btnInvertir, btnCopiar, btnConvertir, btnTemperatura, btnUnidadesM;
+	Button btnDivisas, btnInvertir, btnCopiar, btnConvertir, btnTemperatura, btnUnidadesM, btnActualizar;
 	JLabel lblTitulo;
 	JComboBox listaUnidades, listaUnidades2;
 	TextField txtValor, txtResultado;
 	JTextArea txtOperacion;
 	int opc;
+	String guarda;
 
 	/**
 	 * Launch the application.
@@ -92,16 +97,27 @@ public class ConversorForm extends JFrame implements ActionListener {
 
 		setContentPane(PanelPrincipal);
 		PanelPrincipal.setLayout(null);
+		
+				txtValor = new TextField();
+				txtValor.setFont(new Font("Britannic Bold", Font.PLAIN, 16));
+				txtValor.setBackground(new Color(220, 220, 220));
+				txtValor.setForeground(new Color(0, 0, 0));
+				txtValor.setBounds(132, 167, 106, 29);
+				
+						PanelPrincipal.add(txtValor);
 
 		listaUnidades = new JComboBox();
-		listaUnidades.setBounds(244, 174, 97, 22);
+		listaUnidades.setForeground(new Color(255, 255, 255));
+		listaUnidades.setBounds(244, 174, 116, 22);
 		PanelPrincipal.add(listaUnidades);
 
 		listaUnidades2 = new JComboBox();
-		listaUnidades2.setBounds(487, 174, 97, 22);
+		listaUnidades2.setForeground(new Color(255, 255, 255));
+		listaUnidades2.setBounds(468, 174, 116, 22);
 		PanelPrincipal.add(listaUnidades2);
 
 		btnConvertir = new Button("Convertir");
+		btnConvertir.setForeground(new Color(0, 0, 0));
 		btnConvertir.setBounds(new Rectangle(20, 2, 2, 20));
 		btnConvertir.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 13));
 		btnConvertir.setBounds(159, 219, 97, 30);
@@ -110,6 +126,7 @@ public class ConversorForm extends JFrame implements ActionListener {
 		PanelPrincipal.add(btnConvertir);
 
 		btnInvertir = new Button("Invertir");
+		btnInvertir.setForeground(new Color(0, 0, 0));
 		btnInvertir.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 13));
 		btnInvertir.setBounds(355, 127, 97, 30);
 		btnInvertir.setBackground(new Color(8, 207, 220));
@@ -117,6 +134,7 @@ public class ConversorForm extends JFrame implements ActionListener {
 		PanelPrincipal.add(btnInvertir);
 
 		btnCopiar = new Button("Copiar");
+		btnCopiar.setForeground(new Color(0, 0, 0));
 		btnCopiar.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 13));
 		btnCopiar.setBounds(559, 219, 97, 30);
 		btnCopiar.setBackground(new Color(8, 207, 220));
@@ -137,34 +155,37 @@ public class ConversorForm extends JFrame implements ActionListener {
 		PanelPrincipal.add(label_1);
 
 		txtResultado = new TextField();
-		txtResultado.setForeground(new Color(153, 153, 153));
+		txtResultado.setFont(new Font("Britannic Bold", Font.PLAIN, 15));
+		txtResultado.setBackground(new Color(192, 192, 192));
+		txtResultado.setForeground(new Color(0, 0, 0));
 		txtResultado.setBounds(590, 167, 106, 29);
 		PanelPrincipal.add(txtResultado);
 
-		txtValor = new TextField();
-		txtValor.setForeground(new Color(102, 102, 102));
-		txtValor.setBounds(132, 167, 106, 29);
-
-		PanelPrincipal.add(txtValor);
-
 		btnDivisas = new Button("Divisas");
+		btnDivisas.setForeground(new Color(0, 0, 0));
+		btnDivisas.setBackground(new Color(0, 206, 209));
 		btnDivisas.setBounds(10, 25, 116, 22);
 		btnDivisas.addActionListener(this);
 		PanelPrincipal.add(btnDivisas);
 
 		btnTemperatura = new Button("Temperatura");
+		btnTemperatura.setForeground(new Color(0, 0, 0));
+		btnTemperatura.setBackground(new Color(0, 206, 209));
 		btnTemperatura.setBounds(10, 71, 116, 22);
 		btnTemperatura.addActionListener(this);
 		PanelPrincipal.add(btnTemperatura);
 
 		btnUnidadesM = new Button("Unidades Metricas");
+		btnUnidadesM.setForeground(new Color(0, 0, 0));
+		btnUnidadesM.setBackground(new Color(0, 206, 209));
 		btnUnidadesM.addActionListener(this);
 		btnUnidadesM.setBounds(10, 111, 116, 22);
 		PanelPrincipal.add(btnUnidadesM);
 
-		Button button_1_1_1 = new Button("New button");
-		button_1_1_1.setBounds(29, 192, 70, 22);
-		PanelPrincipal.add(button_1_1_1);
+		btnActualizar = new Button("Actualizar");
+		btnActualizar.setBounds(621, 25, 75, 22);
+		btnActualizar.addActionListener(this);
+		PanelPrincipal.add(btnActualizar);
 
 		Component verticalGlue = Box.createVerticalGlue();
 		verticalGlue.setBounds(new Rectangle(5, 5, 5, 5));
@@ -175,14 +196,16 @@ public class ConversorForm extends JFrame implements ActionListener {
 		lblTitulo = new JLabel("");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
-		lblTitulo.setBounds(266, 39, 249, 38);
+		lblTitulo.setBounds(266, 39, 329, 38);
 		PanelPrincipal.add(lblTitulo);
 
 		txtOperacion = new JTextArea();
-		txtOperacion.setBackground(new Color(204, 255, 255));
-		txtOperacion.setMargin(new Insets(27, 40, 50, 40));
+		txtOperacion.setFont(new Font("Britannic Bold", Font.ITALIC, 16));
+		txtOperacion.setWrapStyleWord(true);
+		txtOperacion.setForeground(new Color(0, 0, 0));
+		txtOperacion.setBackground(SystemColor.activeCaption);
+		txtOperacion.setMargin(new Insets(27, 35, 50, 35));
 		txtOperacion.setLineWrap(true);
-		txtOperacion.setAutoscrolls(false);
 		txtOperacion.setBounds(281, 203, 234, 80);
 
 		PanelPrincipal.add(txtOperacion);
@@ -190,7 +213,7 @@ public class ConversorForm extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		this.guarda = (String)listaUnidades2.getSelectedItem();
 		if (btnDivisas == e.getSource()) {
 			this.opc = 0;
 			lblTitulo.setText("Conversor de divisa");
@@ -229,23 +252,23 @@ public class ConversorForm extends JFrame implements ActionListener {
 
 		if (btnUnidadesM == e.getSource()) {
 			this.opc = 2;
+			lblTitulo.setText("Conversor de Unidades metricas");
 			UnidadesMetricas unidades = new UnidadesMetricas();
-			if(listaUnidades.getItemCount()<=0) {
-			unidades.setTipoUnidades();
+			if (listaUnidades.getItemCount() <= 0) {
+				unidades.setTipoUnidades();
 			}
-			if (listaUnidades.getItemCount() >0) {
+			if (listaUnidades.getItemCount() > 0) {
 				listaUnidades.removeAllItems();
 				listaUnidades2.removeAllItems();
 			}
 
-		
 			if (listaUnidades.getSelectedItem() == null) {
-				
-					for (int i = 0; i < unidades.tiposUnidades.size(); i++) {
+
+				for (int i = 0; i < unidades.tiposUnidades.size(); i++) {
 					listaUnidades.addItem(unidades.tiposUnidades.get(i));
 					listaUnidades2.addItem(unidades.tiposUnidades.get(i));
 				}
-					
+
 			}
 		}
 
@@ -272,9 +295,25 @@ public class ConversorForm extends JFrame implements ActionListener {
 				txtResultado.setText(String.valueOf(convertTemp.getFormula()));
 
 				break;
+			case 2:
+				UnidadesMetricas unidadM = new UnidadesMetricas(listaUnidades.getSelectedItem().toString(), valor,
+						listaUnidades2.getSelectedItem().toString());
+				Conversor convertU = new Conversor(unidadM);
+				convertU.operacionConvertir();
+				txtOperacion.setText(convertU.getFormulaOp());
+				txtResultado.setText(String.valueOf(convertU.getFormula()));
+				break;
 			}
 
 		}
-
+		if(btnInvertir == e.getSource()) {
+			listaUnidades2.setSelectedItem(listaUnidades.getSelectedItem());
+			listaUnidades.setSelectedItem(guarda);
+		}
+		
+		if(btnActualizar == e.getSource()) {
+			ActualizarUnidades actualizacion = new ActualizarUnidades();
+			actualizacion.frame.setVisible(true);
+		}
 	}
 }

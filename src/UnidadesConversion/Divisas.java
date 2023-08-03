@@ -1,4 +1,7 @@
 package UnidadesConversion;
+
+import Conversiones.ActualizarUnidades;
+
 public class Divisas extends Unidades {
 	
 	
@@ -16,7 +19,7 @@ public class Divisas extends Unidades {
 	}
 	@Override
 	public void getUnidad(){
-		
+		//ActualizarUnidades.table.set
 		this.Monedas[0][0] = "MXN";
 		this.Monedas[1][0] = 16.78;
 		this.Monedas[0][1] = "USD";
