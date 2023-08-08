@@ -1,44 +1,55 @@
 package UnidadesConversion;
 
-import Conversiones.ActualizarUnidades;
+import java.io.BufferedReader;
+//import Conversiones.ActualizarUnidades;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+import java.io.IOException;
 
 public class Divisas extends Unidades {
-	
-	
-	public static Object[][] Monedas = new Object[2][10];
-	
+
+	public static String[][] Monedas = new String[2][20];
+	public static int fila;
+	public String rutaArchivo = "C:\\Users\\AUXILIAR\\Desktop\\Prueba.text"; // Ruta del archivo a crear
+	public static String listaDivisas;
+
 	public Divisas() {
 		getUnidad();
 	}
-	
+
 	public Divisas(String tipo, double valor, String tipoAconvertir) {
 		super(tipo, valor, tipoAconvertir);
 
-		
+	}
+
+	public void setUnidad(String nombre, String valor) {
+		super.setUnidad(nombre, valor);
+	}
+
+	public void getUnidad() {
+		super.getUnidad();
 
 	}
-	@Override
-	public void getUnidad(){
-		ActualizarUnidades actualizacion = new ActualizarUnidades();
-		actualizacion.table.setModel(Object[] model);
-		this.Monedas[0][0] = "MXN";
-		this.Monedas[1][0] = 16.78;
-		this.Monedas[0][1] = "USD";
-		this.Monedas[1][1] = 1.0;
-		this.Monedas[0][2] = "EUR";
-		this.Monedas[1][2] = 0.90;
-		this.Monedas[0][3] = "YUAN";
-		this.Monedas[1][3] = 7.17;
-		this.Monedas[0][4] = "LIBRA ESTERLINAS";
-		this.Monedas[1][4] = 0.77;
-		this.Monedas[0][5] = "WON";
-		this.Monedas[1][5] = 1276.41;
-		this.Monedas[0][6] = "ARS";
-		this.Monedas[1][6] = 264.39;
-		this.Monedas[0][7] = "CLP";
-		this.Monedas[1][7] = 813.85;
-		}
+
 	
-	
+
 	
 }

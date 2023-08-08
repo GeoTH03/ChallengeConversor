@@ -97,14 +97,14 @@ public class ConversorForm extends JFrame implements ActionListener {
 
 		setContentPane(PanelPrincipal);
 		PanelPrincipal.setLayout(null);
-		
-				txtValor = new TextField();
-				txtValor.setFont(new Font("Britannic Bold", Font.PLAIN, 16));
-				txtValor.setBackground(new Color(220, 220, 220));
-				txtValor.setForeground(new Color(0, 0, 0));
-				txtValor.setBounds(132, 167, 106, 29);
-				
-						PanelPrincipal.add(txtValor);
+
+		txtValor = new TextField();
+		txtValor.setFont(new Font("Britannic Bold", Font.PLAIN, 16));
+		txtValor.setBackground(new Color(220, 220, 220));
+		txtValor.setForeground(new Color(0, 0, 0));
+		txtValor.setBounds(132, 167, 106, 29);
+
+		PanelPrincipal.add(txtValor);
 
 		listaUnidades = new JComboBox();
 		listaUnidades.setForeground(new Color(255, 255, 255));
@@ -213,7 +213,7 @@ public class ConversorForm extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.guarda = (String)listaUnidades2.getSelectedItem();
+		this.guarda = (String) listaUnidades2.getSelectedItem();
 		if (btnDivisas == e.getSource()) {
 			this.opc = 0;
 			lblTitulo.setText("Conversor de divisa");
@@ -222,14 +222,16 @@ public class ConversorForm extends JFrame implements ActionListener {
 				listaUnidades2.removeAllItems();
 				txtValor.setText(null);
 			}
-			Divisas agregaLista = new Divisas();
+			Unidades agregaLista = new Divisas();
 
-			for (int i = 0; i <= agregaLista.Monedas[0].length; i++) {
-				if (agregaLista.Monedas[0][i] != null && agregaLista.Monedas[0][i] != listaUnidades.getItemAt(i)) {
-					listaUnidades.addItem(agregaLista.Monedas[0][i]);
-					listaUnidades2.addItem(agregaLista.Monedas[0][i]);
+			for (Object div : agregaLista.UnidaDiv[0]) {
+				if (div != null) {
+				//	JOptionPane.showMessageDialog(null, div);
+					listaUnidades.addItem(div);
+					listaUnidades2.addItem(div);
 				}
 			}
+
 		}
 		if (btnTemperatura == e.getSource()) {
 			this.opc = 1;
@@ -255,7 +257,7 @@ public class ConversorForm extends JFrame implements ActionListener {
 			lblTitulo.setText("Conversor de Unidades metricas");
 			UnidadesMetricas unidades = new UnidadesMetricas();
 			if (listaUnidades.getItemCount() <= 0) {
-				unidades.setTipoUnidades();
+				unidades.setUnidad(null, null);
 			}
 			if (listaUnidades.getItemCount() > 0) {
 				listaUnidades.removeAllItems();
@@ -264,21 +266,21 @@ public class ConversorForm extends JFrame implements ActionListener {
 
 			if (listaUnidades.getSelectedItem() == null) {
 
-				for (int i = 0; i < unidades.tiposUnidades.size(); i++) {
+				/*for (int i = 0; i < unidades.tiposUnidades.size(); i++) {
 					listaUnidades.addItem(unidades.tiposUnidades.get(i));
 					listaUnidades2.addItem(unidades.tiposUnidades.get(i));
-				}
+				}*/
 
 			}
 		}
 
 		if (btnConvertir == e.getSource()) {
 			double valor = Double.parseDouble(txtValor.getText());
-
 			switch (opc) {
 			case 0:
-				Divisas operacion = new Divisas(listaUnidades.getSelectedItem().toString(), valor,
+				Unidades operacion = new Divisas(listaUnidades.getSelectedItem().toString(), valor,
 						listaUnidades2.getSelectedItem().toString());
+				//JOptionPane.showMessageDialog(PanelPrincipal, listaUnidades2.getSelectedItem().toString());
 				Conversor convertDiv = new Conversor(operacion);
 				convertDiv.operacionConvertirDiv();
 
@@ -306,14 +308,14 @@ public class ConversorForm extends JFrame implements ActionListener {
 			}
 
 		}
-		if(btnInvertir == e.getSource()) {
+		if (btnInvertir == e.getSource()) {
 			listaUnidades2.setSelectedItem(listaUnidades.getSelectedItem());
 			listaUnidades.setSelectedItem(guarda);
 		}
-		
-		if(btnActualizar == e.getSource()) {
-			ActualizarUnidades actualizacion = new ActualizarUnidades();
-			actualizacion.frame.setVisible(true);
+
+		if (btnActualizar == e.getSource()) {
+			VentanaActualizacion ventana = new VentanaActualizacion();
+			ventana.setVisible(true);
 		}
 	}
 }

@@ -83,8 +83,8 @@ public class Principal {
 		valor = recibe(ventana);
 		
 		if(valor == 1) {
-			ActualizarUnidades window = new ActualizarUnidades();
-			window.frame.setVisible(true);
+			VentanaActualizacion window = new VentanaActualizacion();
+			window.CargaVentana(window);
 		}
 		
 	}

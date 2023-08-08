@@ -1,12 +1,14 @@
 package Conversiones;
 
+import javax.swing.JOptionPane;
+
 import UnidadesConversion.*;
 
 public class Conversor {
 	private String unidad1;
-	private double valorUnidad1;
+	private String valorUnidad1;
 	private String unidad2;
-	private double valorUnidad2;
+	private String valorUnidad2;
 	private double valor;
 	private double formula;
 	private String formulaOperacion;
@@ -19,9 +21,7 @@ public class Conversor {
 		return this.formula;
 	}
 
-	static Object Moneda[][] = new Object[2][10];
-
-	public Conversor(Divisas unidad) {
+	public Conversor(Unidades unidad) {
 
 		getMonedas(unidad);
 		this.valor = unidad.getValor();
@@ -39,36 +39,38 @@ public class Conversor {
 		this.valor = medida.getValor();
 	}
 
-	public void getMonedas(Divisas unidad) {
-		unidad.getUnidad();
-		for (int i = 0; i < unidad.Monedas[0].length; i++) {
-			for (int m = 0; m <= 1; m++) {
+	public void getMonedas(Unidades unidad) {
 
-				Moneda[m][i] = unidad.Monedas[m][i];
+		Object Moneda[][] = new Object[2][unidad.UnidaDiv[0].length];
+
+		for (int i = 0; i < unidad.UnidaDiv[0].length; i++) {
+			for (int m = 0; m <= 1; m++) {
+				if (unidad.UnidaDiv[0][i] != null) {
+					Moneda[m][i] = unidad.UnidaDiv[m][i];
+				}
 			}
 		}
 
 		this.unidad1 = unidad.getTipo();
 		this.unidad2 = unidad.getTipoAconvertir();
-
-		for (int i = 0; i < unidad.Monedas[0].length; i++) {
+		
+		for (int i = 0; i < unidad.UnidaDiv[0].length; i++) {
 
 			if (Moneda[0][i] == unidad1) {
-				this.valorUnidad1 = (double) (Moneda[1][i]);
-				// System.out.println(valorUnidad1);
+				this.valorUnidad1 = (Moneda[1][i].toString());
 			}
 			if (Moneda[0][i] == unidad2) {
-				this.valorUnidad2 = (double) (Moneda[1][i]);
-				// System.out.println(valorUnidad2);
+				this.valorUnidad2 = (Moneda[1][i].toString());
 			}
 
 		}
-		// System.out.println(unidad.Monedas[0].length);
 	}
 
 	public void operacionConvertirDiv() {
-
-		this.formula = (valor / valorUnidad1) * valorUnidad2;
+		Double valor1 = new Double(valorUnidad1);
+		Double valor2 = new Double(valorUnidad2);
+		
+		this.formula = (valor / (valor1) * valor2);
 
 		this.formulaOperacion = (valor + " / " + valorUnidad1 + " * " + valorUnidad2);
 	}
