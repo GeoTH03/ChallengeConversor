@@ -6,21 +6,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.awt.*;
 
 import javax.swing.JOptionPane;
 
 public class Unidades {
 	public static Object[][] UnidaDiv = new Object[2][20];
-	public static Object[] UnidaUnid1 = new Object[20];
-	public static Object[] UnidaUnid2 = new Object[20];
+	public static Object[][] UnidaUnid = new Object[2][20];
 	public static String rutaArchivoDiv = "C:\\Users\\AUXILIAR\\Desktop\\Prueba.text"; // Ruta del archivo a crear
 	public static String rutaArchivoUnid = "C:\\Users\\AUXILIAR\\Desktop\\PruebaUnid.text"; // Ruta del archivo a crear
 
 	public Unidades() {
+		getUnidad();
 	}
 
 	public Unidades(String tipo, double valor, String tipoAconvertir) {
@@ -36,6 +34,7 @@ public class Unidades {
 	public static int unidadTipo;
 	public static int fila;
 	public static String[] nombre;
+
 	public String getTipo() {
 		return tipo;
 	}
@@ -85,28 +84,16 @@ public class Unidades {
 				}
 				break;
 			case 1:
-				
-				String[] valor;
+
 				while ((linea = reader.readLine()) != null) {// Lectura
 					
-					nombre = linea.split(",");
-					
-					if(i % 2 == 0) {
-					//	UnidaUnid1[i] = nombre[i];
-						JOptionPane.showMessageDialog(null, "Nombre: "+nombre[i]); 
-					}
-					else {
-						//JOptionPane.showMessageDialog(null, "Valor "nombre[i]);
-					}
-				UnidaUnid1[i] = linea.substring(0, linea.length() - 2);
-					
-				UnidaUnid2[i] = linea.substring(linea.length() - 4);
+					UnidaUnid[0][i] = linea.replaceAll("[^A-z]", "");
+					UnidaUnid[1][i] = linea.replaceAll("[^0-9.]", "");
 
 					i++;
 				}
 				break;
 			}
-
 			reader.close();
 		} catch (IOException e) {
 			System.err.println("Error al leer el archivo: " + e.getMessage());
@@ -129,10 +116,10 @@ public class Unidades {
 			}
 			break;
 		case 1:
-			this.UnidaUnid1[fila] = nombre;
-			this.UnidaUnid2[fila] = valor;
+			this.UnidaUnid[0][fila] = nombre;
+			this.UnidaUnid[1][fila] = valor;
 
-			String contenido2 = (String) UnidaUnid1[fila] + "," + (String) UnidaUnid2[fila] + "\n";
+			String contenido2 = (String) UnidaUnid[0][fila] + "," + (String) UnidaUnid[1][fila] + "\n";
 
 			if (cadena == null) {
 				this.cadena = contenido2;

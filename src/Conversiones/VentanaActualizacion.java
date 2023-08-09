@@ -2,20 +2,23 @@ package Conversiones;
 
 import UnidadesConversion.*;
 import java.awt.EventQueue;
+import java.awt.Image;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.nio.file.Path;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JLabel;
+import java.awt.Color;
 
 public class VentanaActualizacion extends JFrame implements ActionListener {
 
@@ -50,10 +53,9 @@ public class VentanaActualizacion extends JFrame implements ActionListener {
 	 */
 	public VentanaActualizacion() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(475, 220, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -62,6 +64,7 @@ public class VentanaActualizacion extends JFrame implements ActionListener {
 		contentPane.add(scrollPane);
 
 		table = new JTable();
+		table.setSurrendersFocusOnKeystroke(true);
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(true);
 
@@ -77,22 +80,26 @@ public class VentanaActualizacion extends JFrame implements ActionListener {
 		contentPane.add(btnActualizar);
 
 		menuBar = new JMenuBar();
+		menuBar.setForeground(new Color(255, 255, 255));
 		menuBar.setBounds(24, 0, 350, 22);
 		contentPane.add(menuBar);
 
 		btnActualizaDivi = new JButton("DIVISAS");
+		btnActualizaDivi.setForeground(new Color(255, 255, 255));
 		btnActualizaDivi.addActionListener(this);
 		menuBar.add(btnActualizaDivi);
 
 		btnActualizaUni = new JButton("Unidad Metrica");
+		btnActualizaUni.setForeground(new Color(255, 255, 255));
 		btnActualizaUni.addActionListener(this);
 		menuBar.add(btnActualizaUni);
 
 		lblAdvertencia = new JLabel("");
-		lblAdvertencia.setBounds(56, 222, 255, 14);
+		lblAdvertencia.setBounds(34, 227, 255, 14);
 		contentPane.add(lblAdvertencia);
-
-		// contentPane.add(table);
+		
+		
+		
 
 	}
 
@@ -101,12 +108,14 @@ public class VentanaActualizacion extends JFrame implements ActionListener {
 		if (btnActualizaDivi == e.getSource()) {
 			cargaDatosDivisas();
 			lblAdvertencia.setText("Actualiza el valor en base a un dolar");
+			lblAdvertencia.setIcon(new ImageIcon("C:\\Users\\AUXILIAR\\eclipse-workspace\\ConversorChallenge\\src\\images\\advertencia.png"));
 			this.seleccionado = 0;
 		}
 
 		if (btnActualizaUni == e.getSource()) {
 			cargaDatosUnid();
-			lblAdvertencia.setText("Agrega una nueva Unidad y su valor en CM");
+			lblAdvertencia.setText("Agrega una nueva unidad y su valor en (Mts)");
+			lblAdvertencia.setIcon(new ImageIcon("C:\\Users\\AUXILIAR\\eclipse-workspace\\ConversorChallenge\\src\\images\\advertencia.png"));
 			this.seleccionado = 1;
 		}
 		if (btnActualizar == e.getSource()) {
@@ -115,7 +124,7 @@ public class VentanaActualizacion extends JFrame implements ActionListener {
 	}
 
 	public void cargaDatosDivisas() {
-	
+
 		modeloTabla.setColumnIdentifiers(new Object[] { "DIVISA", "PRECIO" });
 
 		Unidades obtiene = new Divisas();
@@ -131,27 +140,22 @@ public class VentanaActualizacion extends JFrame implements ActionListener {
 	}
 
 	public void cargaDatosUnid() {
-		
-		modeloTabla.setColumnIdentifiers(new Object[] { "UNIDAD", "VALOR" });	
+
+		modeloTabla.setColumnIdentifiers(new Object[] { "UNIDAD", "VALOR" });
 		Unidades obtiene = new UnidadesMetricas();
 		obtiene.unidadTipo = 1;
 		obtiene.getUnidad();
-		modeloTabla.setRowCount(0);// importante mantener
-	
-		seleccionado = 1;
+		modeloTabla.setRowCount(0);
+
+		
 		int i = 0;
 
-		for (String m : obtiene.nombre) {
-			JOptionPane.showMessageDialog(null, m);
-			modeloTabla.addRow(new Object[] { m, obtiene.UnidaUnid2[i] });
+		for (Object m : obtiene.UnidaUnid[0]) {
+
+			modeloTabla.addRow(new Object[] { m, obtiene.UnidaUnid[1][i] });
 			i++;
 		}
 
-		/*
-		 * modeloTabla.addRow(new Object[] {"Centimetro", ""}); modeloTabla.addRow(new
-		 * Object[] {"", ""}); modeloTabla.addRow(new Object[] {"Grados Fahrenheit",
-		 * ""});
-		 */
 	}
 
 	public void actualizaDatos() {
@@ -179,9 +183,5 @@ public class VentanaActualizacion extends JFrame implements ActionListener {
 			manda2.fila = 0;
 			break;
 		}
-	}
-
-	public void limpiaArray() {
-		
 	}
 }
