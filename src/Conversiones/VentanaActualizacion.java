@@ -22,6 +22,10 @@ import java.awt.Color;
 
 public class VentanaActualizacion extends JFrame implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
 	JButton btnActualizar;
@@ -52,6 +56,7 @@ public class VentanaActualizacion extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public VentanaActualizacion() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(475, 220, 450, 300);
 		contentPane = new JPanel();

@@ -10,12 +10,20 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import javax.swing.JOptionPane;
-
+/**
+ * Clase padre de Unidades
+ * Lectura y creación de la lista de unidades con su valor correspondiente
+ * 
+ * @version 1.0
+ * @author Geovanny Torres Hernandez
+ *
+ */
 public class Unidades {
 	public static Object[][] UnidaDiv = new Object[2][20];
 	public static Object[][] UnidaUnid = new Object[2][20];
-	public static String rutaArchivoDiv = "C:\\Users\\AUXILIAR\\Desktop\\Prueba.text"; // Ruta del archivo a crear
-	public static String rutaArchivoUnid = "C:\\Users\\AUXILIAR\\Desktop\\PruebaUnid.text"; // Ruta del archivo a crear
+	static String directorioRaiz = System.getProperty("user.dir");
+	static String nombreArchivoDivisas = directorioRaiz +"\\listas\\Divisas.text"; // Ruta del archivo a crear
+	static String nombreArchivoUnidades = directorioRaiz +"\\listas\\Unidades.text"; // Ruta del archivo a crear
 
 	public Unidades() {
 		getUnidad();
@@ -46,15 +54,16 @@ public class Unidades {
 	public String getTipoAconvertir() {
 		return tipoAconvertir;
 	}
-
+	/*
+	  */
 	public void getUnidad() {
 		try {
 			switch (unidadTipo) {
 			case 0:
-				leerArchivoTexto(rutaArchivoDiv);// Función lectura de archivo, parametro: ruta del archivo;
+				leerArchivoTexto(nombreArchivoDivisas);// Función lectura de archivo, parametro: ruta del archivo;
 				break;
 			case 1:
-				leerArchivoTexto(rutaArchivoUnid);
+				leerArchivoTexto(nombreArchivoUnidades);
 				break;
 			}
 
@@ -98,14 +107,14 @@ public class Unidades {
 		} catch (IOException e) {
 			System.err.println("Error al leer el archivo: " + e.getMessage());
 		}
-
+		
 	}
 
 	public void setUnidad(String nombre, String valor) {
 		switch (unidadTipo) {
 		case 0:
-			this.UnidaDiv[0][fila] = nombre;
-			this.UnidaDiv[1][fila] = valor;
+			Unidades.UnidaDiv[0][fila] = nombre;
+			Unidades.UnidaDiv[1][fila] = valor;
 
 			String contenido = (String) UnidaDiv[0][fila] + "," + (String) UnidaDiv[1][fila] + "\n";
 
@@ -116,8 +125,8 @@ public class Unidades {
 			}
 			break;
 		case 1:
-			this.UnidaUnid[0][fila] = nombre;
-			this.UnidaUnid[1][fila] = valor;
+			Unidades.UnidaUnid[0][fila] = nombre;
+			Unidades.UnidaUnid[1][fila] = valor;
 
 			String contenido2 = (String) UnidaUnid[0][fila] + "," + (String) UnidaUnid[1][fila] + "\n";
 
@@ -131,10 +140,10 @@ public class Unidades {
 
 		switch (unidadTipo) {
 		case 0:
-			crearArchivoTexto(cadena, rutaArchivoDiv);
+			crearArchivoTexto(cadena, nombreArchivoDivisas);
 			break;
 		case 1:
-			crearArchivoTexto(cadena, rutaArchivoUnid);
+			crearArchivoTexto(cadena, nombreArchivoUnidades);
 			break;
 		}
 		// funcion crear archivo, parametros: Contenido y ruta de creación.
